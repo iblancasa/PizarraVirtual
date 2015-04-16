@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Multi-Level Push Menu - Demo 3</title>
+		<meta name="description" content="Multi-Level Push Menu: Off-screen navigation with multiple levels" />
+		<meta name="keywords" content="multi-level, menu, navigation, off-canvas, off-screen, mobile, levels, nested, transform" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+		<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
+
+		<script src="js/modernizr.custom.js"></script>
+
+		<style>
+		html,body,scroller-inner{
+			margin:0;
+			padding:0;
+			border:0;
+		}
+
+			body{
+				background-color: #ffffff;
+			}
+			.canvas-container{
+				position:initial !important;
+			}
+
+			#trigger{
+				z-index:8;
+			}
+			#button > a{
+				font-size:200%;
+			}
+
+</style>
+
+
+	</head>
+	<body>
+		<div class="container">
+			<!-- Push Wrapper -->
+			<div class="mp-pusher" id="mp-pusher">
+
+				<!-- mp-menu -->
+				<nav id="mp-menu" class="mp-menu">
+					<div class="mp-level">
+						<h2 class="icon icon-world"><i class="fa fa-pencil-square-o"></i>Nombre sala</h2>
+						<ul>
+							<li style="background:#DF0101;"><a  href="#">&nbsp;</a></li>
+							<li style="background:#0404B4;"><a  href="#">&nbsp;</a></li>
+							<li style="background:#088A08;"><a  href="#">&nbsp;</a></li>
+							<li style="background:#FFFF00;"><a  href="#">&nbsp;</a></li>
+							<li style="background:#DF7401;"><a  href="#">&nbsp;</a></li>
+							<li style="background:#000000;"><a  href="#">&nbsp;</a></li>
+							<li><a class="icon icon-wallet" href="#">Credits</a></li>
+						</ul>
+
+					</div>
+				</nav>
+				<!-- /mp-menu -->
+
+				<div id="button"><a href="#" id="trigger" class="menu-trigger"><i class="fa fa-plus-circle" style="font-size:5rem;"></i></a></div><!-- this is for emulating position fixed of the nav -->
+
+						<canvas id='canvas'></canvas>
+
+						<script>
+							var canvas = new fabric.Canvas('canvas',
+								{
+									isDrawingMode: true
+								});
+
+								window.addEventListener('resize', resizeCanvas, false);
+
+
+								var color = 'rgba(0, 0, 0, 1)';
+								var opacidad = 1;
+								var rellenar = false;
+
+								resizeCanvas();
+
+
+
+
+
+								function resizeCanvas() {
+									canvas.setHeight(window.innerHeight);
+									canvas.setWidth(window.innerWidth);
+									canvas.calcOffset();
+									canvas.renderAll();
+									}
+
+
+
+						</script>
+
+
+
+			</div><!-- /pusher -->
+		</div><!-- /container -->
+		<script src="js/classie.js"></script>
+		<script src="js/mlpushmenu.js"></script>
+		<script>
+			new mlPushMenu( document.getElementById( 'mp-menu' ), document.getElementById( 'trigger' ) );
+		</script>
+	</body>
+</html>
