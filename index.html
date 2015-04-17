@@ -8,7 +8,6 @@
 		<meta name="description" content="Multi-Level Push Menu: Off-screen navigation with multiple levels" />
 		<meta name="keywords" content="multi-level, menu, navigation, off-canvas, off-screen, mobile, levels, nested, transform" />
 		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
 		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/component.css" />
@@ -29,8 +28,7 @@
 			body{
 				background-image: url('img/background.jpg');
 background-size: cover;
-border: 2px solid darkgray;
-color: #000; text-shadow: 1px 1px 0 #fff;
+
 			}
 			.canvas-container{
 				position:initial !important;
@@ -59,13 +57,13 @@ color: #000; text-shadow: 1px 1px 0 #fff;
 
 						<ul>
 							<li><a ><i class="fa fa-users"></i>Usuarios: 8</a></li>
-							<li style="background:#DF0101;"><a  href="#">&nbsp;</a></li>
-							<li style="background:#0404B4;"><a  href="#">&nbsp;</a></li>
-							<li style="background:#088A08;"><a  href="#">&nbsp;</a></li>
-							<li style="background:#FFFF00;"><a  href="#">&nbsp;</a></li>
-							<li style="background:#DF7401;"><a  href="#">&nbsp;</a></li>
-							<li style="background:#000000;"><a  href="#">&nbsp;</a></li>
-							<li ><a  href="#"><i class="fa fa-eraser"></i> Goma de borrar</a></li>
+							<li style="background:#DF0101;"><a onclick="color('#DF0101');" href="#">&nbsp;</a></li>
+							<li style="background:#0404B4;"><a onclick="color('#0404B4');" href="#">&nbsp;</a></li>
+							<li style="background:#088A08;"><a onclick="color('#088A08');" href="#">&nbsp;</a></li>
+							<li style="background:#FFFF00;"><a onclick="color('#FFFF00');" href="#">&nbsp;</a></li>
+							<li style="background:#DF7401;"><a onclick="color('#DF7401');" href="#">&nbsp;</a></li>
+							<li style="background:#000000;"><a onclick="color('#000000');" href="#">&nbsp;</a></li>
+							<li ><a  href="#" onclick="goma();"><i class="fa fa-eraser"></i> Goma de borrar</a></li>
 
 							<li><a class="icon icon-wallet" href="#">Salir</a></li>
 						</ul>
@@ -86,10 +84,8 @@ color: #000; text-shadow: 1px 1px 0 #fff;
 
 								window.addEventListener('resize', resizeCanvas, false);
 
+								canvas.freeDrawingBrush.width=7;
 
-								var color = 'rgba(0, 0, 0, 1)';
-								var opacidad = 1;
-								var rellenar = false;
 
 								resizeCanvas();
 
@@ -103,6 +99,17 @@ color: #000; text-shadow: 1px 1px 0 #fff;
 									canvas.calcOffset();
 									canvas.renderAll();
 									}
+
+								function color(color){
+									canvas.freeDrawingBrush.color=color;
+									canvas.freeDrawingBrush.width=7;
+								}
+
+								function goma(){
+									canvas.freeDrawingBrush.color='#ffffff';
+									canvas.freeDrawingBrush.width=12;
+								}
+
 
 
 
