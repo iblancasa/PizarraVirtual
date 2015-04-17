@@ -16,6 +16,7 @@
 		<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
 
+		<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
 		<script src="js/modernizr.custom.js"></script>
 
 		<style>
@@ -41,6 +42,26 @@ background-size: cover;
 				font-size:200%;
 			}
 
+			.toast {
+    width:200px;
+    height:20px;
+    height:auto;
+    position:absolute;
+    left:50%;
+    margin-left:-100px;
+    bottom:10px;
+    background-color: #383838;
+    color: #F0F0F0;
+    font-family: Calibri;
+    font-size: 20px;
+    padding:10px;
+    text-align:center;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+}
+
 </style>
 
 
@@ -57,12 +78,12 @@ background-size: cover;
 
 						<ul>
 							<li><a ><i class="fa fa-users"></i>Usuarios: 8</a></li>
-							<li style="background:#DF0101;"><a onclick="color('#DF0101');" href="#">&nbsp;</a></li>
-							<li style="background:#0404B4;"><a onclick="color('#0404B4');" href="#">&nbsp;</a></li>
-							<li style="background:#088A08;"><a onclick="color('#088A08');" href="#">&nbsp;</a></li>
-							<li style="background:#FFFF00;"><a onclick="color('#FFFF00');" href="#">&nbsp;</a></li>
-							<li style="background:#DF7401;"><a onclick="color('#DF7401');" href="#">&nbsp;</a></li>
-							<li style="background:#000000;"><a onclick="color('#000000');" href="#">&nbsp;</a></li>
+							<li style="background:#DF0101;"><a onclick="color('#DF0101','Rojo');" href="#">&nbsp;</a></li>
+							<li style="background:#0404B4;"><a onclick="color('#0404B4','Azul');" href="#">&nbsp;</a></li>
+							<li style="background:#088A08;"><a onclick="color('#088A08','Verde');" href="#">&nbsp;</a></li>
+							<li style="background:#FFFF00;"><a onclick="color('#FFFF00','Amarillo');" href="#">&nbsp;</a></li>
+							<li style="background:#DF7401;"><a onclick="color('#DF7401','Naranja');" href="#">&nbsp;</a></li>
+							<li style="background:#000000;"><a onclick="color('#000000',Negro);" href="#">&nbsp;</a></li>
 							<li ><a  href="#" onclick="goma();"><i class="fa fa-eraser"></i> Goma de borrar</a></li>
 
 							<li><a class="icon icon-wallet" href="#">Salir</a></li>
@@ -75,8 +96,10 @@ background-size: cover;
 				<div id="button"><a href="#" id="trigger" class="menu-trigger"><i class="fa fa-plus-circle" style="font-size:5rem; color: #000000;"></i></a></div><!-- this is for emulating position fixed of the nav -->
 
 						<canvas id='canvas'></canvas>
-
+						<div class='toast' style='display:none'></div>
 						<script>
+
+
 							var canvas = new fabric.Canvas('canvas',
 								{
 									isDrawingMode: true
@@ -100,18 +123,38 @@ background-size: cover;
 									canvas.renderAll();
 									}
 
-								function color(color){
+								function color(color,nombre){
 									canvas.freeDrawingBrush.color=color;
 									canvas.freeDrawingBrush.width=7;
+
+									$('.toast').stop().html(nombre).fadeIn(400).delay(3000).fadeOut(400);
 								}
 
 								function goma(){
+									console.log(JSON.stringify(canvas));
 									canvas.freeDrawingBrush.color='#ffffff';
 									canvas.freeDrawingBrush.width=12;
+									$('.toast').stop().html('Goma de borrar').fadeIn(400).delay(3000).fadeOut(400);
 								}
 
 
 
+
+								var socket = io();
+
+
+
+								canvas.on('mouse:up', function(options) {
+									var datos = JSON.stringify(canvas);
+
+											socket.emit('pintar', datos);
+									});
+
+								socket.on('pintar',function(datos){
+									canvas.loadFromJSON(datos);
+									resizeCanvas();
+									console.log("LLegan cosas");
+								});
 
 						</script>
 

@@ -1,0 +1,27 @@
+{
+  "name": "Socket.io-OSLtalk",
+  "version": "0.0.0",
+  "description": "Example for Socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/iblancasa/Socket.io-OSLtalk.git"
+  },
+  "keywords": [
+    "example",
+    "socket.io",
+    "talk"
+  ],
+  "author": "Israel Blancas",
+  "license": "GPLv2",
+  "bugs": {
+    "url": "https://github.com/iblancasa/Socket.io-OSLtalk/issues"
+  },
+  "dependencies": {
+    "express": "latest",
+    "socket.io": "latest"
+  }
+}
