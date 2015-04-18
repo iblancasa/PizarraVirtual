@@ -1,24 +1,29 @@
 {
-  "name": "Socket.io-OSLtalk",
+  "name": "Pizarra Virtual",
   "version": "0.0.0",
-  "description": "Example for Socket.io",
+  "description": "Pizarra virtual utilizando canvas",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/iblancasa/Socket.io-OSLtalk.git"
+    "url": "git://github.com/iblancasa/PizarraVirtual.git"
   },
   "keywords": [
-    "example",
+    "pizarra",
     "socket.io",
-    "talk"
+    "blackboard",
+    "app",
+    "android",
+    "ios",
+    "windows",
+    "nube"
   ],
   "author": "Israel Blancas",
   "license": "GPLv2",
   "bugs": {
-    "url": "https://github.com/iblancasa/Socket.io-OSLtalk/issues"
+    "url": "https://github.com/iblancasa/PizarraVirtual/issues"
   },
   "dependencies": {
     "express": "latest",
