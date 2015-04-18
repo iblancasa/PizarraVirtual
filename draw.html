@@ -150,6 +150,13 @@ background-size: cover;
 									users=data.users;
 								});
 
+
+								socket.on('usuarios',function(data){
+									console.log(data);
+									users=data;
+								});
+
+
 								canvas.on('mouse:up', function(options) {
 									var datosCanvas = JSON.stringify(canvas);
 

@@ -34,10 +34,10 @@ io.on('connection', function(socket){
 
   socket.on('unir',function(nombre){
     if(rooms[nombre]){//Existe, por tanto se le une
-
+      rooms[nombre].users+=1;
       var data={
         "id":0,
-        "users":0,
+        "users":rooms[nombre].users,
       };
 
       socket.myroom=nombre;
@@ -45,6 +45,7 @@ io.on('connection', function(socket){
 
       socket.emit('unido',data);
       socket.emit('pintar',rooms[nombre].canvas);
+      socket.broadcast.to(socket.myroom).emit('usuarios',rooms[nombre].users);
 
 
     }
@@ -88,6 +89,22 @@ io.on('connection', function(socket){
       }
     }
   );
+
+  socket.on('disconnect', function () {
+    if(rooms[socket.myroom]){//Evitar problemas primera conexión
+      rooms[socket.myroom].users-=1;
+      socket.broadcast.to(socket.myroom).emit('usuarios',rooms[socket.myroom].users);
+
+      if(rooms[socket.myroom].socket==socket){
+        rooms[socket.myroom].users=null;
+        rooms[socket.myroom].pass=null;
+        rooms[socket.myroom].canvas=null;
+        rooms[socket.myroom].socket=null;
+        rooms[socket.myroom]=null;
+      }
+
+    }
+  });
 
   }
 );

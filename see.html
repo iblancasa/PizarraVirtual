@@ -145,6 +145,11 @@ background-size: cover;
 								});
 
 
+							socket.on('usuarios',function(data){
+								console.log(data);
+								users=data;
+							});
+
 
 
 								function getParameterByName(name) {
