@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Pizarra virtual</title>
+		<meta name="description" content="Pizarra virtual" />
+		<meta name="keywords" content="multi-level, menu, navigation, off-canvas, off-screen, mobile, levels, nested, transform" />
+		<meta name="author" content="Codrops" />
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+		<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
+
+		<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+		<script src="js/modernizr.custom.js"></script>
+
+		<style>
+		html,body,scroller-inner{
+			margin:0;
+			padding:0;
+			border:0;
+		}
+
+			body{
+				background-image: url('img/background.jpg');
+background-size: cover;
+
+			}
+			.canvas-container{
+				position:initial !important;
+			}
+
+			#trigger{
+				z-index:8;
+			}
+			#button > a{
+				font-size:200%;
+			}
+
+			.toast {
+    width:200px;
+    height:20px;
+    height:auto;
+    position:absolute;
+    left:50%;
+    margin-left:-100px;
+    bottom:10px;
+    background-color: #383838;
+    color: #F0F0F0;
+    font-family: Calibri;
+    font-size: 20px;
+    padding:10px;
+    text-align:center;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+}
+
+</style>
+
+
+	</head>
+	<body>
+		<div class="container">
+			<!-- Push Wrapper -->
+			<div class="mp-pusher" id="mp-pusher">
+
+				<!-- mp-menu -->
+				<nav id="mp-menu" class="mp-menu">
+					<div class="mp-level">
+						<h2 ><i class="fa fa-pencil-square-o"></i>Nombre sala</h2>
+
+						<ul>
+							<li><a ><i class="fa fa-users"></i>Usuarios: 8</a></li>
+							<li style="background:#DF0101;"><a onclick="color('#DF0101','Rojo');" href="#">&nbsp;</a></li>
+							<li style="background:#0404B4;"><a onclick="color('#0404B4','Azul');" href="#">&nbsp;</a></li>
+							<li style="background:#088A08;"><a onclick="color('#088A08','Verde');" href="#">&nbsp;</a></li>
+							<li style="background:#FFFF00;"><a onclick="color('#FFFF00','Amarillo');" href="#">&nbsp;</a></li>
+							<li style="background:#DF7401;"><a onclick="color('#DF7401','Naranja');" href="#">&nbsp;</a></li>
+							<li style="background:#000000;"><a onclick="color('#000000',Negro);" href="#">&nbsp;</a></li>
+							<li ><a  href="#" onclick="goma();"><i class="fa fa-eraser"></i> Goma de borrar</a></li>
+
+							<li><a class="icon icon-wallet" href="#">Salir</a></li>
+						</ul>
+
+					</div>
+				</nav>
+				<!-- /mp-menu -->
+
+				<div id="button"><a href="#" id="trigger" class="menu-trigger"><i class="fa fa-plus-circle" style="font-size:5rem; color: #000000;"></i></a></div><!-- this is for emulating position fixed of the nav -->
+
+						<canvas id='canvas'></canvas>
+						<div class='toast' style='display:none'></div>
+						<script>
+
+
+							var canvas = new fabric.Canvas('canvas',
+								{
+									isDrawingMode: true
+								});
+
+								window.addEventListener('resize', resizeCanvas, false);
+
+								canvas.freeDrawingBrush.width=7;
+
+
+								resizeCanvas();
+
+
+
+
+
+								function resizeCanvas() {
+									canvas.setHeight(window.innerHeight);
+									canvas.setWidth(window.innerWidth);
+									canvas.calcOffset();
+									canvas.renderAll();
+									}
+
+								function color(color,nombre){
+									canvas.freeDrawingBrush.color=color;
+									canvas.freeDrawingBrush.width=7;
+
+									$('.toast').stop().html(nombre).fadeIn(400).delay(3000).fadeOut(400);
+								}
+
+								function goma(){
+									console.log(JSON.stringify(canvas));
+									canvas.freeDrawingBrush.color='#ffffff';
+									canvas.freeDrawingBrush.width=12;
+									$('.toast').stop().html('Goma de borrar').fadeIn(400).delay(3000).fadeOut(400);
+								}
+
+
+
+
+								var socket = io();
+
+
+
+								canvas.on('mouse:up', function(options) {
+									var datos = JSON.stringify(canvas);
+
+											socket.emit('pintar', datos);
+									});
+
+
+
+						</script>
+
+
+
+			</div><!-- /pusher -->
+		</div><!-- /container -->
+		<script src="js/classie.js"></script>
+		<script src="js/mlpushmenu.js"></script>
+		<script>
+			new mlPushMenu( document.getElementById( 'mp-menu' ), document.getElementById( 'trigger' ) );
+		</script>
+	</body>
+</html>
