@@ -1,5 +1,5 @@
 {
-  "name": "Pizarra Virtual",
+  "name": "PizarraVirtual",
   "version": "0.0.0",
   "description": "Pizarra virtual utilizando canvas",
   "main": "index.js",
