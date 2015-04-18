@@ -81,11 +81,11 @@ io.on('connection', function(socket){
   );
 
   socket.on('pintar',function(datos){
-    //rooms[socket.myroom].canvas=datos;
 
-
-
-    socket.broadcast.to(socket.myroom).emit('pintar', datos);
+    if(rooms[socket.myroom].pass==datos.id){
+      socket.broadcast.to(socket.myroom).emit('pintar', datos.datosCanvas);
+      rooms[socket.myroom].canvas=datos.datosCanvas;
+      }
     }
   );
 

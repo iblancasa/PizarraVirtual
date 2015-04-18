@@ -141,9 +141,22 @@ background-size: cover;
 
 
 								var socket = io();
+								var id;
+								var users;
+
+
+								socket.on('unido',function(data){
+									id=data.id;
+									users=data.users;
+								});
 
 								canvas.on('mouse:up', function(options) {
-									var datos = JSON.stringify(canvas);
+									var datosCanvas = JSON.stringify(canvas);
+
+									var datos = {
+										"id":id,
+										"datosCanvas":datosCanvas
+									}
 
 											socket.emit('pintar', datos);
 									});
@@ -156,6 +169,9 @@ background-size: cover;
 									}
 
 									var sala = getParameterByName('nombre');
+
+
+
 									socket.emit('unir',sala);
 
 

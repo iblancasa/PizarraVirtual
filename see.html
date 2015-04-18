@@ -134,6 +134,19 @@ background-size: cover;
 
 								});
 
+
+								var id;
+								var users;
+
+
+								socket.on('unido',function(data){
+									id=data.id;
+									users=data.users;
+								});
+
+
+
+
 								function getParameterByName(name) {
 											name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 											var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
