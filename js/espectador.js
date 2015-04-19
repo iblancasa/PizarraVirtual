@@ -2,21 +2,44 @@
   var canvas = new fabric.Canvas('canvas',
     {
       isDrawingMode: false,
-      selectable:false
     });
+    canvas.selection=false;
 
 
-
-
+  var widthMaster,heightMaster;
   var socket = io();
 
   socket.on('pintar',function(datos){
-    canvas.loadFromJSON(datos);
-    resizeCanvas();
-    canvas.forEachObject(function(o) {
-      o.selectable = false;
-    });
 
+    var scaleFactor = 1;
+    var mywidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    var width,height;
+
+    scaleFactor = mywidth/widthMaster;
+
+
+    width = widthMaster * scaleFactor;
+    height = heightMaster * scaleFactor;
+
+
+    canvas.setWidth(width);
+    canvas.setHeight(height);
+    canvas.calcOffset();
+
+    canvas.loadFromJSON(datos);
+
+    if(scaleFactor != 1) {
+      for(var i=0; i<canvas._objects.length; i++){
+         canvas._objects[i].scale(scaleFactor);
+         canvas._objects[i].setLeft(canvas._objects[i].left * scaleFactor);
+         canvas._objects[i].setTop(canvas._objects[i].top * scaleFactor);
+         canvas._objects[i].selectable = false;
+      }
+      canvas.renderAll();
+    }
+
+
+    canvas.renderAll();
   });
 
 

@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var puerto = process.env.OPENSHIFT_INTERNAL_PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var puerto = process.env.OPENSHIFT_INTERNAL_PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000;
 var ip = process.env.OPENSHIFT_NODEJS_IP || 'localhost';
 
 var rooms={};
@@ -32,37 +32,43 @@ app.get('/sala', function(req, res){
 io.on('connection', function(socket){
 
 
-  socket.on('unir',function(nombre){
-    if(rooms[nombre]){//Existe, por tanto se le une
-      rooms[nombre].users+=1;
+  socket.on('unir',function(mensaje){
+
+    if(rooms[mensaje.sala]){//Existe, por tanto se le une
+
+      rooms[mensaje.sala].users+=1;
       var data={
         "id":0,
-        "users":rooms[nombre].users,
+        "users":rooms[mensaje.sala].users,
+        "width":rooms[mensaje.sala].width,
+        "height":rooms[mensaje.sala].height
       };
 
-      socket.myroom=nombre;
+      socket.myroom=mensaje.sala;
 
 
       socket.emit('unido',data);
-      socket.emit('pintar',rooms[nombre].canvas);
-      socket.broadcast.to(socket.myroom).emit('usuarios',rooms[nombre].users);
+      socket.emit('pintar',rooms[mensaje.sala].canvas);
+      socket.broadcast.to(socket.myroom).emit('usuarios',rooms[mensaje.sala].users);
 
 
     }
     else{//Él es el maestro
       var id = S4() + S4() + "-" + S4() + "-"+ S4() + "-" + S4() + "-" + S4() + S4() + S4();
 
-
       var newRoom = {
         socket:socket,
         users:1,
-        pass:id
+        pass:id,
+        width:mensaje.width,
+        height:mensaje.height
       };
 
 
-      rooms[nombre]=newRoom;
 
-      socket.myroom=nombre;
+      rooms[mensaje.sala]=newRoom;
+
+      socket.myroom=mensaje.sala;
 
       var data={
         "id":id,
@@ -72,9 +78,8 @@ io.on('connection', function(socket){
       socket.emit('unido',data);
     }
 
-    socket.join(nombre);
-    for (var socketId in io.nsps['/'].adapter.rooms['asd']) {
-    }
+    socket.join(mensaje.sala);
+
   }
 
   );
@@ -101,7 +106,6 @@ io.on('connection', function(socket){
         rooms[socket.myroom].socket=null;
         rooms[socket.myroom]=null;
       }
-
     }
   });
 
@@ -110,7 +114,7 @@ io.on('connection', function(socket){
 
 
 http.listen(puerto,ip, function(){//Lanzamos el servidor
-  console.log('Iniciando servidor en el puerto'+ puerto);
+  console.log('Iniciando servidor en el puerto '+ puerto);
 });
 
 function S4() {

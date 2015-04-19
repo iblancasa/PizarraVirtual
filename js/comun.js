@@ -2,7 +2,7 @@
       canvas.setHeight(window.innerHeight);
       canvas.setWidth(window.innerWidth);
       canvas.calcOffset();
-      canvas.renderAll();
+
     }
 
 
@@ -21,6 +21,8 @@
   var sala = getParameterByName('nombre');
 
   socket.on('unido',function(data){
+    widthMaster=data.width;
+    heightMaster=data.height;
 		id=data.id;
     $('#nUsers').html(data.users);
 	});
@@ -29,4 +31,12 @@
     $('#nUsers').html(data);
   });
 
-  socket.emit('unir',sala);
+  var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+  var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+
+  var unir = {
+    "sala":sala,
+    "width":width,
+    "height":height
+  }
+  socket.emit('unir',unir);
