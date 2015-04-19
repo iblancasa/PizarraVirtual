@@ -73,9 +73,7 @@ io.on('connection', function(socket){
     }
 
     socket.join(nombre);
-    console.log("GENTE CONECTADA EN "+nombre);
     for (var socketId in io.nsps['/'].adapter.rooms['asd']) {
-    console.log(socketId);
     }
   }
 
@@ -96,6 +94,7 @@ io.on('connection', function(socket){
       socket.broadcast.to(socket.myroom).emit('usuarios',rooms[socket.myroom].users);
 
       if(rooms[socket.myroom].socket==socket){
+        socket.broadcast.to(socket.myroom).emit('noAdmin');
         rooms[socket.myroom].users=null;
         rooms[socket.myroom].pass=null;
         rooms[socket.myroom].canvas=null;
@@ -111,7 +110,7 @@ io.on('connection', function(socket){
 
 
 http.listen(puerto,ip, function(){//Lanzamos el servidor
-  console.log('Iniciando servidor');
+  console.log('Iniciando servidor en el puerto'+ puerto);
 });
 
 function S4() {
