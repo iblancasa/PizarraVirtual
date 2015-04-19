@@ -55,7 +55,7 @@ io.on('connection', function(socket){
 
       var newRoom = {
         socket:socket,
-        users:0,
+        users:1,
         pass:id
       };
 
@@ -66,7 +66,7 @@ io.on('connection', function(socket){
 
       var data={
         "id":id,
-        "users":0
+        "users":1
       };
 
       socket.emit('unido',data);

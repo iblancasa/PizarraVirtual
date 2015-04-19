@@ -22,11 +22,11 @@
 
   socket.on('unido',function(data){
 		id=data.id;
-		users=data.users;
+    $('#nUsers').html(data.users);
 	});
 
   socket.on('usuarios',function(data){
-
+    $('#nUsers').html(data);
   });
 
   socket.emit('unir',sala);
