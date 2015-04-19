@@ -32,8 +32,16 @@ app.get('/sala', function(req, res){
 io.on('connection', function(socket){
 
 
+  io.on('giro',function(data){
+    console.log(data);
+    if(rooms[socket.myroom].pass==data.id){
+      socket.broadcast.to(socket.myroom).emit('giro', data);
+      rooms[socket.myroom].width=data.width;
+      rooms[socket.myroom].height=data.height;
+      }
+  });
+
   socket.on('unir',function(mensaje){
-    console.log(mensaje);
     if(rooms[mensaje.sala]){//Existe, por tanto se le une
 
       rooms[mensaje.sala].users+=1;
@@ -63,8 +71,6 @@ io.on('connection', function(socket){
         width:mensaje.width,
         height:mensaje.height
       };
-
-
 
       rooms[mensaje.sala]=newRoom;
 

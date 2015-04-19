@@ -25,6 +25,19 @@
 
   var socket = io('http://pizarravirtual-iblancasa.rhcloud.com:8000/');
 
+
+  $( window ).resize(function(){
+      var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+      var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+
+      var unir = {
+        "id":id,
+        "width":width,
+        "height":height
+      }
+      socket.emit('giro',unir);
+  });
+
 	canvas.on('mouse:up', function(options) {
 		var datosCanvas = JSON.stringify(canvas);
 

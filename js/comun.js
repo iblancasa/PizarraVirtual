@@ -20,11 +20,13 @@
   var id;
   var sala = getParameterByName('nombre');
 
+
   socket.on('unido',function(data){
     widthMaster=data.width;
     heightMaster=data.height;
 		id=data.id;
     $('#nUsers').html(data.users);
+
 	});
 
   socket.on('usuarios',function(data){
@@ -40,3 +42,4 @@
     "height":height
   }
   socket.emit('unir',unir);
+  $('#nSala').html(sala);

@@ -12,15 +12,17 @@
 
   socket.on('pintar',function(datos){
 
-    var scaleFactor = 1;
+    var scaleFactorH = 1;
+    var scaleFactorW = 1;
     var mywidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    var myheight = (window.innerHeight > 0) ? window.innerHeight : screen.height;
     var width,height;
 
-    scaleFactor = mywidth/widthMaster;
+    scaleFactorH = myheight/heightMaster;
+    scaleFactorW = mywidth/widthMaster;
 
-
-    width = widthMaster * scaleFactor;
-    height = heightMaster * scaleFactor;
+    width = widthMaster * scaleFactorW;
+    height = heightMaster * scaleFactorH;
 
 
     canvas.setWidth(width);
@@ -29,11 +31,11 @@
 
     canvas.loadFromJSON(datos);
 
-    if(scaleFactor != 1) {
+    if(scaleFactorW != 1) {
       for(var i=0; i<canvas._objects.length; i++){
-         canvas._objects[i].scale(scaleFactor);
-         canvas._objects[i].setLeft(canvas._objects[i].left * scaleFactor);
-         canvas._objects[i].setTop(canvas._objects[i].top * scaleFactor);
+         canvas._objects[i].scale(scaleFactorW);
+         canvas._objects[i].setLeft(canvas._objects[i].left * scaleFactorW);
+         canvas._objects[i].setTop(canvas._objects[i].top * scaleFactorW);
          canvas._objects[i].selectable = false;
       }
       canvas.renderAll();
