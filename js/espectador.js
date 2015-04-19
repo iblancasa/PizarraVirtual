@@ -2,12 +2,13 @@
   var canvas = new fabric.Canvas('canvas',
     {
       isDrawingMode: false,
+      selectable:false
     });
-    canvas.selection=false;
+    canvas.selectable=false;
 
 
   var widthMaster,heightMaster;
-  var socket = io();
+  var socket = io('http://pizarravirtual-iblancasa.rhcloud.com:8000/');
 
   socket.on('pintar',function(datos){
 
@@ -37,6 +38,10 @@
       }
       canvas.renderAll();
     }
+    canvas.selection = false;
+    canvas.forEachObject(function(o) {
+      o.selectable = false;
+    });
 
 
     canvas.renderAll();

@@ -33,7 +33,7 @@ io.on('connection', function(socket){
 
 
   socket.on('unir',function(mensaje){
-
+    console.log(mensaje);
     if(rooms[mensaje.sala]){//Existe, por tanto se le une
 
       rooms[mensaje.sala].users+=1;

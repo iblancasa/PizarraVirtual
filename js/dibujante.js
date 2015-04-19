@@ -23,7 +23,7 @@
 	canvas.freeDrawingBrush.width=7;
 
 
-  var socket = io();
+  var socket = io('http://pizarravirtual-iblancasa.rhcloud.com:8000/');
 
 	canvas.on('mouse:up', function(options) {
 		var datosCanvas = JSON.stringify(canvas);
