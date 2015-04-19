@@ -5,7 +5,7 @@ html,body,scroller-inner{
 }
 
   body{
-    background-image: url('img/background.jpg');
+    background-image: url('../img/background.jpg');
     background-size: cover;
   }
   .canvas-container{
