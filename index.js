@@ -106,11 +106,7 @@ io.on('connection', function(socket){
 
       if(rooms[socket.myroom].socket==socket){
         socket.broadcast.to(socket.myroom).emit('noAdmin');
-        rooms[socket.myroom].users=null;
-        rooms[socket.myroom].pass=null;
-        rooms[socket.myroom].canvas=null;
-        rooms[socket.myroom].socket=null;
-        rooms[socket.myroom]=null;
+        delete rooms[socket.myroom];
       }
     }
   });
