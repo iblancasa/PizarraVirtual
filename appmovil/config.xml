@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.iblancasa.PizarraVirtual" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Pizarra Virtual</name>
+    <description>
+        Aplicación de pizarra virtual que nos permite hacer "streaming" de lo que vayamos pintando
+    </description>
+    <author email="iblancasa@gmail.com" href="http://iblancasa.com">
+        Israel Blancas
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+	<feature name="InAppBrowser">
+		<param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+	</feature>
+<preference name="Orientation" value="landscape" />
+<preference name="Fullscreen" value="true" />
+<icon src="icon.png" />
+</widget>
